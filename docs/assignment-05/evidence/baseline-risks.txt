@@ -1,0 +1,4 @@
+{"attendees":"-1","matches":["A101","B202","C303","D404"]}
+{"attendees":"0","matches":["A101","B202","C303","D404"]}
+{"attendees":"1.5","matches":["A101","B202","C303","D404"]}
+{"attendees":"Infinity","matches":[]}

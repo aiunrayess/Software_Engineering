@@ -1,0 +1,38 @@
+
+> smart-campus-room-availability@2.0.0 test
+> node --test tests/*.test.js
+
+✔ AC1 rejects start at the current time (2.229329ms)
+✔ AC1 accepts an end at 1440 (2.13016ms)
+✔ AC1 rejects reversed and non-whole-minute times (0.593031ms)
+✔ AC2 accepts exactly 120 minutes (0.274173ms)
+✔ AC2 rejects 121 minutes (0.297453ms)
+✔ AC3 rejects a blocked room (0.25126ms)
+✔ AC4 allows a request touching the end of a booking (0.635521ms)
+✔ AC4 allows a request touching the start of a booking (0.248076ms)
+✔ AC4 rejects an overlap (0.513099ms)
+✔ AC4 rejects a request containing an existing booking (0.759139ms)
+✔ overlap helper treats endpoint touching as non-overlapping (0.225812ms)
+✔ AC5 leaves booking data unchanged (0.249177ms)
+✔ F1 includes a room at exact requested capacity (2.624144ms)
+✔ F1 excludes rooms with insufficient capacity (0.288227ms)
+✔ F2 requires every selected equipment item (2.212388ms)
+✔ F2 does not treat a partial equipment match as sufficient (0.33334ms)
+✔ F4 produces no matches for impossible requirements (0.284484ms)
+✔ filtering does not mutate the room catalog (0.289845ms)
+✔ integration: filtered selection checks the selected room's own bookings (2.532389ms)
+✔ integration/F3: a selected blocked room is unavailable (0.272293ms)
+✔ integration/F5: changing the selected room changes the result (1.754971ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.277081
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

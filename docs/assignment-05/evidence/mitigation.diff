@@ -1,0 +1,102 @@
+diff --git a/.gitignore b/.gitignore
+index 25fbf5a..5f19b1d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,2 +1,4 @@
+ node_modules/
+ coverage/
++
++dist/
+diff --git a/index.html b/index.html
+index 3603b5a..b0357a6 100644
+--- a/index.html
++++ b/index.html
+@@ -12,7 +12,7 @@
+     <header><p class="eyebrow">SMART CAMPUS</p><h1>Find an available room</h1><p>Fictional data only. The fixed current time is <strong id="now"></strong>.</p></header>
+     <section class="panel filters" aria-labelledby="filters-heading">
+       <h2 id="filters-heading">Requirements</h2>
+-      <label class="field">Attendees<input id="attendees" type="number" min="1" value="1" inputmode="numeric"></label>
++      <label class="field">Attendees<input id="attendees" type="number" min="1" step="1" aria-describedby="attendees-error" value="1" inputmode="numeric"><small id="attendees-error" role="status"></small></label>
+       <fieldset><legend>Required equipment (all selected items must be present)</legend><div id="equipment-filters" class="checks"></div></fieldset>
+     </section>
+     <section aria-labelledby="rooms-heading"><div class="section-heading"><h2 id="rooms-heading">Matching rooms</h2><p>Select one room to check its own booking schedule.</p></div><div id="room-list" class="room-list" aria-live="polite"></div></section>
+diff --git a/package.json b/package.json
+index 03d0215..01e8418 100644
+--- a/package.json
++++ b/package.json
+@@ -1,9 +1,15 @@
+ {
+   "name": "smart-campus-room-availability",
+-  "version": "2.0.0",
++  "version": "2.1.0",
+   "private": true,
+   "type": "module",
+   "scripts": {
+-    "test": "node --test tests/*.test.js"
++    "test": "node --test tests/*.test.js",
++    "check": "node scripts/check.mjs",
++    "build": "node scripts/build.mjs",
++    "verify": "npm run check && npm test && npm run build"
++  },
++  "engines": {
++    "node": ">=18"
+   }
+ }
+diff --git a/src/app.js b/src/app.js
+index 414331b..dacb896 100644
+--- a/src/app.js
++++ b/src/app.js
+@@ -31,7 +31,11 @@ function setResult({ available, message }, style = available ? "available" : "un
+ }
+ 
+ function renderRooms() {
+-  const rooms = getMatchingRooms(ROOMS, requirements());
++  const criteria = requirements();
++  const validAttendees = Number.isSafeInteger(criteria.attendees) && criteria.attendees >= 1;
++  byId("attendees").setAttribute("aria-invalid", String(!validAttendees));
++  byId("attendees-error").textContent = validAttendees ? "" : "Enter a positive whole number of attendees.";
++  const rooms = getMatchingRooms(ROOMS, criteria);
+   const list = byId("room-list");
+   if (rooms.length === 0) {
+     selectedRoomId = null;
+@@ -71,7 +75,7 @@ byId("now").textContent = timeLabel(NOW);
+ byId("check").addEventListener("click", evaluate);
+ byId("attendees").addEventListener("input", () => { renderRooms(); evaluate(); });
+ document.querySelectorAll("input[name='equipment']").forEach((input) => input.addEventListener("change", () => { renderRooms(); evaluate(); }));
+-byId("start").addEventListener("input", updateTimePreviews);
+-byId("end").addEventListener("input", updateTimePreviews);
++byId("start").addEventListener("input", evaluate);
++byId("end").addEventListener("input", evaluate);
+ renderRooms();
+ evaluate();
+diff --git a/src/filtering.js b/src/filtering.js
+index fdf3089..e600f46 100644
+--- a/src/filtering.js
++++ b/src/filtering.js
+@@ -1,5 +1,7 @@
+ /** Returns rooms that satisfy every active capacity and equipment requirement. */
+-export function filterRooms(rooms, { attendees = 0, equipment = [] } = {}) {
++export function filterRooms(rooms, { attendees = 1, equipment = [] } = {}) {
++  // Explicit invalid counts must never produce a bookable room selection.
++  if (!Number.isSafeInteger(attendees) || attendees < 1) return [];
+   const requestedEquipment = new Set(equipment);
+   return rooms.filter((room) =>
+     room.capacity >= attendees &&
+diff --git a/tests/filtering.test.js b/tests/filtering.test.js
+index b944982..b510738 100644
+--- a/tests/filtering.test.js
++++ b/tests/filtering.test.js
+@@ -15,3 +15,13 @@ test("filtering does not mutate the room catalog", () => {
+   filterRooms(ROOMS, { attendees: 8, equipment: ["Display"] });
+   assert.equal(JSON.stringify(ROOMS), before);
+ });
++
++
++test("invalid attendee counts cannot select rooms", () => {
++  for (const attendees of [0, -1, 1.5, NaN, Infinity, -Infinity, Number.MAX_SAFE_INTEGER + 1]) {
++    assert.deepEqual(ids({ attendees }), [], `attendees=${attendees}`);
++  }
++});
++test("omitted criteria still return the complete catalog", () => {
++  assert.deepEqual(filterRooms(ROOMS), [...ROOMS]);
++});

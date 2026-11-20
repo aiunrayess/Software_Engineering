@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fictional Smart Campus room availability checker">
+  <title>Smart Campus | Room Availability</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header><p class="eyebrow">SMART CAMPUS</p><h1>Find an available room</h1><p>Fictional data only. The fixed current time is <strong id="now"></strong>.</p></header>
+    <section class="panel filters" aria-labelledby="filters-heading">
+      <h2 id="filters-heading">Requirements</h2>
+      <label class="field">Attendees<input id="attendees" type="number" min="1" step="1" aria-describedby="attendees-error" value="1" inputmode="numeric"><small id="attendees-error" role="status"></small></label>
+      <fieldset><legend>Required equipment (all selected items must be present)</legend><div id="equipment-filters" class="checks"></div></fieldset>
+    </section>
+    <section aria-labelledby="rooms-heading"><div class="section-heading"><h2 id="rooms-heading">Matching rooms</h2><p>Select one room to check its own booking schedule.</p></div><div id="room-list" class="room-list" aria-live="polite"></div></section>
+    <section class="panel request" aria-labelledby="request-heading">
+      <h2 id="request-heading">Availability request</h2>
+      <div class="time-grid">
+        <label class="field">Start (minutes after midnight)<input id="start" type="number" min="0" max="1440" step="1" value="660" inputmode="numeric"><small id="start-preview"></small></label>
+        <label class="field">End (minutes after midnight)<input id="end" type="number" min="0" max="1440" step="1" value="720" inputmode="numeric"><small id="end-preview"></small></label>
+      </div>
+      <button id="check" class="primary" type="button">Check availability</button>
+      <div id="result" class="result" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

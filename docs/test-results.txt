@@ -1,0 +1,36 @@
+Assignment 04 - actual automated test execution
+Date: 2026-11-05
+Environment: Node.js v24.19.0 on Windows
+Command: npm test
+
+> smart-campus-room-availability@2.0.0 test
+> node --test tests/*.test.js
+
+Tests covered:
+- AC1 bounds and start-after-now behavior
+- AC2 exact 120-minute and 121-minute boundaries
+- AC3 blocked room behavior
+- AC4 touching and overlapping interval boundaries
+- AC5 booking-data immutability
+- F1 capacity exact/insufficient boundaries
+- F2 all-required-equipment behavior
+- F3 blocked selected room behavior
+- F4 empty matching-room state
+- F5 selection-dependent result behavior
+- Integration: filtered selected room uses its own booking schedule
+
+Result:
+tests 21
+suites 0
+pass 21
+fail 0
+cancelled 0
+skipped 0
+todo 0
+duration_ms 217.1182
+
+Manual browser check (2026-11-05, localhost):
+- Default 660-720 request for Atlas was visibly reported Available.
+- Selecting Delta immediately reported it Unavailable because it is blocked.
+- Selecting Video conferencing plus Speakerphone reduced the list to Birch only.
+- Setting attendees to 31 showed the explicit no-matching-rooms state.

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "default available",
+    "passed": true
+  },
+  {
+    "name": "time edit refreshes overlap",
+    "passed": true
+  },
+  {
+    "name": "touching endpoint available",
+    "passed": true
+  },
+  {
+    "name": "invalid attendees \"\"",
+    "passed": true
+  },
+  {
+    "name": "invalid attendees \"0\"",
+    "passed": true
+  },
+  {
+    "name": "invalid attendees \"-1\"",
+    "passed": true
+  },
+  {
+    "name": "invalid attendees \"1.5\"",
+    "passed": true
+  },
+  {
+    "name": "valid input restores selection",
+    "passed": true
+  },
+  {
+    "name": "blocked selection rejected",
+    "passed": true
+  },
+  {
+    "name": "no match state",
+    "passed": true
+  }
+]

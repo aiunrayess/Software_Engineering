@@ -1,0 +1,49 @@
+
+> smart-campus-room-availability@2.1.0 verify
+> npm run check && npm test && npm run build
+
+
+> smart-campus-room-availability@2.1.0 check
+> node scripts/check.mjs
+
+Syntax check passed: 10 JavaScript files.
+
+> smart-campus-room-availability@2.1.0 test
+> node --test tests/*.test.js
+
+✔ AC1 rejects start at the current time (1.622688ms)
+✔ AC1 accepts an end at 1440 (1.258102ms)
+✔ AC1 rejects reversed and non-whole-minute times (0.209902ms)
+✔ AC2 accepts exactly 120 minutes (0.165072ms)
+✔ AC2 rejects 121 minutes (0.343255ms)
+✔ AC3 rejects a blocked room (0.19055ms)
+✔ AC4 allows a request touching the end of a booking (0.247767ms)
+✔ AC4 allows a request touching the start of a booking (0.154004ms)
+✔ AC4 rejects an overlap (0.213402ms)
+✔ AC4 rejects a request containing an existing booking (0.258011ms)
+✔ overlap helper treats endpoint touching as non-overlapping (0.294988ms)
+✔ AC5 leaves booking data unchanged (0.161169ms)
+✔ F1 includes a room at exact requested capacity (2.384931ms)
+✔ F1 excludes rooms with insufficient capacity (0.269553ms)
+✔ F2 requires every selected equipment item (0.333858ms)
+✔ F2 does not treat a partial equipment match as sufficient (0.305323ms)
+✔ F4 produces no matches for impossible requirements (0.236571ms)
+✔ filtering does not mutate the room catalog (0.264326ms)
+✔ invalid attendee counts cannot select rooms (0.351784ms)
+✔ omitted criteria still return the complete catalog (0.22668ms)
+✔ integration: filtered selection checks the selected room's own bookings (3.643272ms)
+✔ integration/F3: a selected blocked room is unavailable (0.358582ms)
+✔ integration/F5: changing the selected room changes the result (2.920717ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.722547
+
+> smart-campus-room-availability@2.1.0 build
+> node scripts/build.mjs
+
+Static build ready in dist/: index.html, styles.css and src/.

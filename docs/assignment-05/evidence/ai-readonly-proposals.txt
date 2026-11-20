@@ -1,0 +1,9 @@
+AI read-only candidate review, CodeRabbit Agent, 2026-11-19; prior to source edits.
+Prompt: Propose at least five risks across correctness, security, dependency and agent operations; do not modify files; challenge each claim with repository evidence.
+R1 Correctness: attendee min=1 is HTML-only; Number('')=0 and filterRooms accepts negative/fractional counts. Reproduce against pure filter and browser.
+R2 Correctness: time input listeners update previews only; old Available can describe a newly overlapping request. Reproduce in browser.
+R3 Agent operations: no root AGENTS.md; future automation lacks scoped safe commands/review gates. Verify tracked tree.
+R4 Reproducibility: package.json lacks lint/build scripts; advertised tests do not syntax-check app.js. Run missing commands and inspect imports.
+R5 Security: innerHTML includes catalog names/equipment; hypothetical remote catalog could inject markup. Current immutable literals mean exploit is unverified; do not claim current XSS.
+R6 Dependency: potential vulnerable npm dependencies. Inspect manifest before accepting; no dependencies means unsupported current claim.
+R7 Maintainability: UI mixes event handling and markup, but pure rules/filter/service already separated. Consider pattern only if a concrete new variation exists; avoid speculative abstraction.

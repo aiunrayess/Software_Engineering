@@ -1,0 +1,8 @@
+PASS exported asset and HTTP content: index.html
+PASS exported asset and HTTP content: styles.css
+PASS exported asset and HTTP content: src/app.js
+PASS exported asset and HTTP content: src/bookingRules.js
+PASS exported asset and HTTP content: src/filtering.js
+PASS exported asset and HTTP content: src/roomData.js
+PASS exported asset and HTTP content: src/roomService.js
+PASS 10 browser assertions recorded; all static export assets match source.
